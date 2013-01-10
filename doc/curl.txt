@@ -1,0 +1,166 @@
+Sample curls
+------------
+
+1) Create listing query:
+a)
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+            {"query" :
+                  [{"beds": ["long", [1,3]]},
+                   {"zip": ["string", ["38119", "38125"]]},
+                   {"location": ["geopoint", [40, -70, "1200km"]]},
+                   {"price":  ["long", [140000, 200000]]}
+                  ],
+              "resource_type": "listing",
+              "query_id": "memberID1-q1"
+            }'   -H "Accept: application/json" -H "Content-Type: application/json"
+
+b)
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+            {"query" :
+                  [{"address": ["text", ["7009 F"]]}
+                  ],
+              "resource_type": "listing",
+              "query_id": "memberID1-q2"
+            }'   -H "Accept: application/json" -H "Content-Type: application/json"
+c)
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+            {"query" :
+                  [{"address": ["text", ["7009 F"]]},
+                   {"field1": ["string", ["field1"]]}
+                  ],
+              "resource_type": "listing",
+              "query_id": "memberID1-q3"
+            }'   -H "Accept: application/json" -H "Content-Type: application/json"
+
+d) curl -XPOST http://localhost:3000/listing_queries/create -d '
+               {"query" :
+                     [
+                      {"field1": ["string", ["field1"]]}
+                     ],
+                 "resource_type": "listing",
+                 "query_id": "memberID1-q4"
+               }'   -H "Accept: application/json" -H "Content-Type: application/json"
+e)
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+               {"query" :
+                     [
+                      {"beds": ["long", [1,4]]},
+                      {"baths": ["long", [1,3]]},
+                      {"location": ["geopoint", [40, -70, "120km"]]}
+                     ],
+                 "resource_type": "listing",
+                 "query_id": "memberID1-q5"
+               }'   -H "Accept: application/json" -H "Content-Type: application/json"
+f)
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+               {"query" :
+                     [
+                       {"comments": ["text", ["Awesome house"]]}
+                     ],
+                 "resource_type": "listing",
+                 "query_id": "memberID1-q6"
+               }'   -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+2) Percolate a listing
+a)
+curl -XPOST http://localhost:3000/listings/find -d '
+            { "listing":
+                { "id": "listing_id1",
+                  "resource_type": "listing",
+                  "address": "7009 Fellsway Cove",
+                  "beds": 3,
+                  "baths":2,
+                  "zip": "38125",
+                  "location": {"lat": 40.12, "lon": -71.34},
+                  "price":  140000,
+                  "comment": "this is a comment"
+                 }
+            }' -H "Accept: application/json" -H "Content-Type: application/json"
+
+b)
+curl -XPOST http://localhost:3000/listings/find -d '
+            { "listing":
+                { "id": "listing_id2",
+                  "resource_type": "listing",
+                  "beds": 3,
+                  "baths":2,
+                  "zip": "38125",
+                  "price":  140000,
+                  "address": "7009 Fellsway Cove"
+                 }
+            }' -H "Accept: application/json" -H "Content-Type: application/json"
+c)
+curl -XPOST http://localhost:3000/listings/find -d '
+            { "listing":
+                { "id": "listing_id3",
+                  "resource_type": "listing",
+                  "beds": 3,
+                  "baths":2,
+                  "zip": "38125",
+                  "price":  140000,
+                  "address": "7009 Fellsway Cove",
+                  "field1": "field1"
+                 }
+            }' -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+3) Show saved query:
+a) Get a specific member-query
+ curl -XGET localhost:9200/_percolator/listing/_search?pretty=true -d '
+            {"query":
+                {"field":
+                    {"_id": "memberID1-q3"
+                    }
+                 }
+             }'
+b) Get all queries for a specific member
+ curl -XGET localhost:9200/_percolator/listing/_search?pretty=true -d '
+            {"query":
+                {"prefix":
+                    {"_id": "memberID1-"
+                    }
+                 }
+             }'
+
+3) Update Member's saved resources:
+
+curl -XPUT http://localhost:3000/saved_resources/update/1 -d '
+{
+  "saved_resource": {
+      "id": "50a6fc9e6cde546b46000002",
+      "description": "Added description to rental"
+     }
+}' -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+4) Delete Member (Note: will also delete saved resources
+
+curl -XDELETE http://localhost:3000/saved_resources/delete/2
+
+
+5) Delete a specific resource given a resource id:
+
+curl -XPUT http://localhost:3000/saved_resources/remove_resource/1 -d '
+{
+      "id": "50a6fc9e6cde546b46000002"
+}' -H "Accept: application/json" -H "Content-Type: application/json"
+
+
+6) Add resource(s) to a member:
+
+curl -XPUT http://localhost:3000/saved_resources/add_resources/1 -d '
+{
+  "saved_resources":[
+            {
+                "description": "This is my first saved Rental resource",
+                "resource_type": "Rental",
+                "resource_id": "abc-rental-id"
+            },
+            {
+                "description": "This is my first saved Listing resource",
+                "resource_type": "Listing",
+                "resource_id": "abc-listing-id"
+            }
+          ]
+}' -H "Accept: application/json" -H "Content-Type: application/json"
