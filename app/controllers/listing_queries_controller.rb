@@ -1,7 +1,6 @@
 class ListingQueriesController < ApplicationController
 
   def create
-    #debugger
     puts 'I am in create'
     #debugger
     query_hash = params[:listing_query]
