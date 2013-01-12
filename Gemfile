@@ -14,7 +14,7 @@ gem 'tire'
 #gem 'yajl'
 gem 'pry'
 gem 'rake',"~> 0.9.2.2"  #aaa
-gem 'thin'
+#gem 'thin'
 
 
 # Gems used only for assets and not required

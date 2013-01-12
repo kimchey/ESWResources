@@ -1,5 +1,17 @@
 Sample curls
 ------------
+Heroku url: http://warm-basin-6019.herokuapp.com/
+
+curl -XPOST http://warm-basin-6019.herokuapp.com/listing_queries/create -d '
+            {"query" :
+                  [{"beds": ["long", [1,3]]},
+                   {"zip": ["string", ["38119", "38125"]]},
+                   {"location": ["geopoint", [40, -70, "1200km"]]},
+                   {"price":  ["long", [140000, 200000]]}
+                  ],
+              "resource_type": "listing",
+              "query_id": "memberID1-q1"
+            }'   -H "Accept: application/json" -H "Content-Type: application/json"
 
 1) Create listing query:
 a)
