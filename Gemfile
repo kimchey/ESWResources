@@ -5,7 +5,7 @@ gem 'rails', '3.2.5'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+#gem 'sqlite3'
 #gem 'mongo_mapper'
 gem 'hashie', "~> 1.2.0"
 gem "json_spec", '~> 1.0'
@@ -41,7 +41,9 @@ group :development, :test, :assets do
   gem "fixture_builder"
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'therubyracer', :platforms => :ruby
+  #gem 'therubyracer', :platforms => :ruby
+  gem 'libv8'
+  gem 'therubyracer', :require => 'libv8'
   gem 'execjs'
 end
 
