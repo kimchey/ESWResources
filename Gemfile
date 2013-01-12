@@ -42,9 +42,11 @@ group :development, :test, :assets do
   gem 'uglifier', '>= 1.0.3'
 
   #gem 'therubyracer', :platforms => :ruby
-  gem 'libv8'
-  gem 'therubyracer', :require => 'libv8'
+  #gem 'libv8'
+  #gem 'libv8', '~> 3.11.8'
+  #gem 'therubyracer', :require => 'libv8'
   gem 'execjs'
+  gem 'therubyracer', '0.10.2', :platforms => :ruby
 end
 
 gem 'jquery-rails'
