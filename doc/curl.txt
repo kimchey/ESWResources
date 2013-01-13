@@ -75,6 +75,21 @@ curl -XPOST http://localhost:3000/listing_queries/create -d '
 
 
 2) Percolate a listing
+
+curl -XPOST http://warm-basin-6019.herokuapp.com/listings/find -d '
+            { "listing":
+                { "id": "listing_id1",
+                  "resource_type": "listing",
+                  "address": "7009 Fellsway Cove",
+                  "beds": 3,
+                  "baths":2,
+                  "zip": "38125",
+                  "location": {"lat": 40.12, "lon": -71.34},
+                  "price":  140000,
+                  "comment": "this is a comment"
+                 }
+            }' -H "Accept: application/json" -H "Content-Type: application/json"
+
 a)
 curl -XPOST http://localhost:3000/listings/find -d '
             { "listing":
