@@ -29,12 +29,10 @@ class ESQueryParser
   end
 
   def create_mapping(field, field_type)
-    debugger
     idx_t = @idx_type
     idx_sym = idx_t.to_sym
     field_sym = field.to_sym
     Tire.index idx_t do
-      debugger
       create :mappings => {
           idx_sym => {
               :properties => {
@@ -58,7 +56,7 @@ class ESQueryParser
   end
 
   def parse_long(key, value)
-    q =  value.length > 1 ?
+    q =  value[1].length > 1  ?
         {:range => {key.to_sym => {:from => value[1][0], :to => value[1][1]}}} :
         {:term => {key.to_sym => value[1][0]}}
     @query << q
@@ -81,7 +79,25 @@ class ESQueryParser
     @query << q
   end
 
+  def parse_geopoly(key, value)
+    q = {:geo_polygon => {
+                          key.to_sym => {
+                              :points => value[1]
+                            }
+                          }
+        }
+    @query << q
+  end
+
 end
+
+#{"location" => ["geopoly", ["34.98123, -90.35156",
+#                            "36.47944, -90.26367",
+#                            "36.76161, -84.63867",
+#                            "34.83708, -84.81445",
+#                            ]
+#                ]
+#}
 =begin
 query_hash = {"query" =>
                   [{"beds" => ["long", [1,3]]},

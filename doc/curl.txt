@@ -73,6 +73,36 @@ curl -XPOST http://localhost:3000/listing_queries/create -d '
                  "query_id": "memberID1-q6"
                }'   -H "Accept: application/json" -H "Content-Type: application/json"
 
+g)
+
+curl -XPOST http://localhost:3000/listing_queries/create -d '
+               {"query" :
+                     [
+                      {"beds": ["long", 2]},
+                      {"location": ["geopoly", ["34.98123, -90.35156",
+                                                  "36.47944, -90.26367",
+                                                  "36.76161, -84.63867",
+                                                  "34.83708, -84.81445"
+                                                  ]]}
+                     ],
+                 "resource_type": "listing",
+                 "query_id": "memberID1-q7poly"
+               }'   -H "Accept: application/json" -H "Content-Type: application/json"
+percolate:
+curl -XPOST http://localhost:3000/listings/find -d '
+            { "listing":
+                { "id": "listing_id1",
+                  "resource_type": "listing",
+                  "address": "7009 Fellsway Cove",
+                  "beds": 3,
+                  "baths":2,
+                  "zip": "38125",
+                  "location": {"lat": 35.48377, "lon": -88.85742},
+                  "price":  140000,
+                  "comment": "this is a comment"
+                 }
+            }' -H "Accept: application/json" -H "Content-Type: application/json"
+
 
 2) Percolate a listing
 
@@ -89,6 +119,8 @@ curl -XPOST http://warm-basin-6019.herokuapp.com/listings/find -d '
                   "comment": "this is a comment"
                  }
             }' -H "Accept: application/json" -H "Content-Type: application/json"
+
+
 
 a)
 curl -XPOST http://localhost:3000/listings/find -d '

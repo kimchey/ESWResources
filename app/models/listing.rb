@@ -4,8 +4,6 @@ require 'uri'
 require 'tire'
 require 'pry'
 require 'rubygems'
-#require '/home/move/Documents/stash/ESWResources/app/models/query_parser.rb'
-#require '/home/move/Documents/stash/ESWResources/app/models/listing_query.rb'
 require 'query_parser.rb'
 require 'listing_query.rb'
 

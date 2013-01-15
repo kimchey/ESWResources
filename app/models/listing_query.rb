@@ -22,6 +22,7 @@ class ListingQuery
                   :baths => {:type => 'long'},
                   :location => {:type => 'geo_point'},
                   :price => {:type => 'long'},
+                  :sqft => {:type => 'long'},
                   :comment => {:type => 'string'}
               }
           }
